@@ -1,0 +1,284 @@
+<html lang="Pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Hub</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    
+   
+    <!--Parte visual do Codigo-->
+    <style>
+        body{
+         margin: 0;
+        padding: 0;
+         height: 100vh;
+        }
+        nav.menu{
+            width: 80px;
+            height: 100%;
+            background-color: rgb(22, 0, 36);
+            padding: 40px 0 10px 1%;
+            box-shadow: 8px 0 0 rgb(75, 0, 0);
+
+            position: fixed;
+            top:0;
+            left:0;
+            overflow: hidden;
+
+            transition: width .4s;
+        }
+
+        nav.menu:hover{
+            width: 300px;
+        }
+        .link{
+             white-space: nowrap;
+        }
+
+        .lateral{
+            width: 100%;
+            padding-left: 10px;
+        }
+
+        .lateral > i{
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            
+        }
+
+        ul{
+            list-style-type: none;
+        }
+
+        ul li.item-menu{
+            transition: 0.5s;
+        }
+
+        ul li.item-menu a{
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            padding: 20px 0%;
+            display: flex;
+            margin-bottom: 20px;
+            line-height: 40px;
+        }
+        ul li.item-menu a .link{
+            margin-left: 30px;
+        }
+        ul li.item-menu:hover{
+            background: rgb(75, 0, 0);
+        }
+
+        .pagina{
+            display: none;
+            margin-left: 320px;
+            padding: 20px;
+        }
+
+        #inicio{
+          display: block;
+        }
+        .card{
+            border:3px solid rgb(75, 0, 0);
+            width:300px;
+            padding:15px;
+            margin:10px 0px;
+            border-radius:20px;
+        }
+        .tituloinicio{
+            margin-left: 20px;
+            font-size: 40px;
+        }
+        .paragrafo{
+            margin-left: 70px;
+            font-size: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+        }
+    
+        .titulo2{
+            margin-left: -100px;
+            font-size: 40px;
+        }
+        input {
+            width: 300px;      
+            height: 40px;       
+            font-size: 18px;    
+        }
+    </style>
+</head>
+<body>
+    
+    <!--Cria o menu da esquerda-->
+    <nav class="menu">
+
+    <div class="lateral">
+        <i class="bi bi-list"></i>
+    </div>
+    <!--Cria as opcões dentro do menu-->
+
+    <ul>
+        <li class="item-menu">
+            <a href="#" onclick="mostrarPagina('inicio')">
+                <span class="icone"><i class="bi bi-house-door"></i></span>
+                <span class="link">Inicio</span>            
+            </a>
+        </li>
+
+
+        <li class="item-menu">
+            <a href="#" onclick="mostrarPagina('adicionar')">
+                <span class="icone"><i class="bi bi-plus-square-fill"></i></span>
+                <span class="link">Adicionar jogos</span>            
+            </a>
+        </li>
+
+         <li class="item-menu">
+            <a href="#" onclick="mostrarPagina('biblioteca')">
+                <span class="icone"><i class="bi bi-collection"></i></span>
+                <span class="link">Biblioteca</span>            
+            </a>
+        </li>
+    </ul>
+    </nav>
+
+    <!--Aqui é onde são criadas as paginas-->
+
+    <!--PAGINA INICIAL-->
+    <div id="inicio" class="pagina">
+        <h1 class="tituloinicio">Loja Games Hub</h1>
+        <p class="paragrafo">Compre jogos aqui!!</p>
+
+        <div id="listaJogos"></div>
+    </div>
+
+    <!--ADICIONAR JOGOS-->
+    <div id="adicionar" class="pagina">
+        <h1 class="titulo2">Adicionar Jogos ao games hub</h1>
+
+        <form>
+        <input id="nome" placeholder="Nome do jogo">
+        <input id="genero" placeholder="Gênero">
+        <input id="plataforma" placeholder="Plataforma">
+        </form>
+    </div>
+    <!------Biblioteca------>
+    <div id="biblioteca" class="pagina">
+        <h1>Sua biblioteca Games Hub</h1>
+        <div id="listarbiblioteca"></div>
+    </div>
+    <script>
+        let biblioteca = [];
+        function adicionarbiblioteca(i){
+            biblioteca.push(jogos[i]);
+            listarbiblioteca();
+            alert("Jogo adicionado a biblioteca")
+        }
+    </script>
+    <!------------------------->
+        <button onclick="adicionarJogo()">Adicionar</button>
+    
+    <script>
+        //Vetor onde os jogos são armazenados
+        let jogos = [
+            {
+                nome:"Minecraft",
+                genero:"Sandbox",
+                plataforma:"PC"
+            },
+
+            {
+                nome:"GTA V",
+                genero:"Ação",
+                plataforma:"PC"
+            }
+        ];
+            //Função onde exclui os jogos
+                function excluir(i) {
+                jogos.splice(i, 1);
+                listaJogos();
+            }  
+            //Função onde adiciona na biblioteca
+            function listarbiblioteca(){
+                let lista = document.getElementById("listarbiblioteca");
+                lista.innerHTML ="";
+
+                for(let i = 0;i <biblioteca.length;i++){
+                    lista.innerHTML +=
+                    "<div class='card'>" +
+
+                        "<h2>" + biblioteca[i].nome + "</h2>" +
+                        "<p>Gênero: " + biblioteca[i].genero + "</p>" +
+                        "<p>Plataforma: " + biblioteca[i].plataforma + "</p>" +
+
+                    "</div>";
+                }
+            }
+
+        function listaJogos(){
+            
+            //----------------
+            let lista= document.getElementById("listaJogos");
+            lista.innerHTML="";
+
+            for(let i=0;i<jogos.length; i++){
+                lista.innerHTML +=
+
+                 "<div class='card'>"+
+
+                "<h2>"+jogos[i].nome+"</h2>"+
+                "<p>Gênero: "+jogos[i].genero+"</p>"+
+                "<p>Plataforma: "+jogos[i].plataforma+"</p>"+
+                "<button onclick='adicionarbiblioteca("+ i +")'>Adicionar à Biblioteca</button>"+
+                "<button onclick='excluir("+ i +")'>Excluir</button>"+
+
+        "</div>";
+            }
+
+        }
+        //Função onde adiciona os jogos
+        function adicionarJogo(){
+
+            let nome = document.getElementById("nome").value;
+            let genero = document.getElementById("genero").value;
+            let plataforma = document.getElementById("plataforma").value;
+
+            jogos.push({
+                nome:nome,
+                genero:genero,
+                plataforma:plataforma
+
+            });
+
+        listaJogos();
+
+        // LIMPAR CAMPOS
+
+            document.getElementById("nome").value="";
+            document.getElementById("genero").value="";
+            document.getElementById("plataforma").value="";
+
+}
+        // CARREGAR JOGOS AO ABRIR
+        listaJogos();
+            </script>
+
+            <script>
+                function mostrarPagina(id){
+
+                let paginas = document.querySelectorAll(".pagina");
+
+                    paginas.forEach(function(pagina){
+                        pagina.style.display = "none";
+                }); 
+                    document.getElementById(id).style.display = "block";
+        }
+            </script>
+    
+</body>
+</html>
